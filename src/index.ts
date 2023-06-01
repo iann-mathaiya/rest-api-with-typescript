@@ -1,5 +1,6 @@
 import http from 'http'
 import cors from 'cors'
+import router from './router'
 import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
@@ -27,3 +28,5 @@ const MONGO_URL = 'mongodb+srv://Ian:qIV9SoOTaxB9xBR6@cluster0.qgwaiej.mongodb.n
 mongoose.Promise = Promise
 mongoose.connect(MONGO_URL)
 mongoose.connection.on('error', (error: Error) => console.log(error))
+
+app.use('/', router())
