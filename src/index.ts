@@ -1,11 +1,14 @@
 import http from 'http'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import router from './router'
 import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+
+dotenv.config()
 
 const app = express()
 
@@ -19,14 +22,12 @@ app.use(bodyParser.json())
 
 const server = http.createServer(app)
 
-server.listen(8080, ()=>{
+server.listen(8080, () => {
     console.log('Running server on port 8080')
 })
 
-const MONGO_URL = 'mongodb+srv://Ian:qIV9SoOTaxB9xBR6@cluster0.qgwaiej.mongodb.net/?retryWrites=true&w=majority'
-
 mongoose.Promise = Promise
-mongoose.connect(MONGO_URL)
+mongoose.connect(process.env.MONGO_URI)
 mongoose.connection.on('error', (error: Error) => console.log(error))
 
 app.use('/', router())
